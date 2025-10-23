@@ -1,0 +1,61 @@
+@startuml
+top to bottom direction
+
+!include ../C4/C4_Container.puml
+
+Person(user, "Пользователи", "")
+
+System_Boundary(cinema_abyss, "Система Кинобездна") {
+    Container(web_app, "Web Application", ".NET MVC", "Веб-интерфейс")
+    Container(mobile_app, "Web Application", ".NET MVC", "Веб-интерфейс")
+    Container(gateway, "Gateway API", ".NET & Ocelot")
+    Container(user_service, "User Service")
+    ContainerDb(user_db, "User Db", "PostgreSQL", "Хранение данных пользователей")
+    Container(movies_service, "Movies Service", "", "Метаданные фильмов, рейтинги, жанры")
+    ContainerDb(movies_db, "Movies Db", "PostgreSQL", "Хранение метаданных фаильмов, жанры, рейтинги")
+    Container(subscription_service, "Subscription Service", "", "Сервис подписок")
+    ContainerDb(subscription_db, "Subscription Db", "PostgreSQL", "Подписки")
+    Container(recommendation_service, "Recommendation Service", "", "Сервис рекомендаций")
+    ContainerDb(recommendation_db, "Recommendation Db", "PostgreSQL", "Рекомендации")
+    Container(payment_service, "Payment Service", "", "Сервис платежей")
+    ContainerDb(payment_db, "Payment Db", "PostgreSQL", "Платежи")
+    ContainerQueue(kafka, "Event-driven", "Kafka", "Обмен данными c сервисами умный дом")
+    ContainerQueue(rabbitMq, "Event-driven", "RabbitMQ", "Интеграция c рекомендательной системой")
+    ContainerDb(s3, "S3 Storage", "Хранение файлов и медиа")
+}
+
+System_Ext(payment, "Платежная система")
+System_Ext(recommendation, "Сторонняя рекомендательная система")
+
+Rel_D(user,web_app,"Регистрация пользователей, получение метаданных фильмов, платежи, подписки", "HTTPS/JSON")
+Rel_D(user,mobile_app,"Регистрация пользователей, получение метаданных фильмов, платежи, подписки", "HTTPS/JSON")
+
+Rel_D(web_app,gateway,"", "HTTPS/JSON")
+Rel_D(mobile_app,gateway,"", "HTTPS/JSON")
+
+Rel_D(gateway,user_service,"", "HTTPS/JSON")
+Rel_D(gateway,movies_service,"", "HTTPS/JSON")
+Rel_D(gateway,subscription_service,"", "HTTPS/JSON")
+Rel_D(gateway,recommendation_service,"", "HTTPS/JSON")
+Rel_D(gateway,payment_service,"", "HTTPS/JSON")
+
+Rel_R(user_service, user_db, "")
+Rel_R(movies_service, movies_db, "")
+Rel_D(movies_service, s3, "S3 API", "S3 API")
+Rel_R(subscription_service, subscription_db, "")
+Rel_R(recommendation_service, recommendation_db, "")
+Rel_R(payment_service, payment_db, "")
+
+BiRel_D(user_service,kafka,"", "pub/sub")
+BiRel_D(movies_service,kafka,"", "pub/sub")
+BiRel_D(subscription_service,kafka,"", "pub/sub")
+BiRel_D(payment_service,kafka,"", "pub/sub")
+
+Rel_D(payment_service,payment,"", "")
+Rel_D(recommendation_service,rabbitMq,"", "pub/sub")
+Rel_D(rabbitMq,recommendation,"", "pub/sub")
+
+
+
+
+@enduml
