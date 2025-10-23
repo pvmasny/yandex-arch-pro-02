@@ -6,8 +6,8 @@ top to bottom direction
 Person(user, "Пользователи", "")
 
 System_Boundary(cinema_abyss, "Система Кинобездна") {
-    Container(web_app, "Web Application", ".NET MVC", "Веб-интерфейс")
-    Container(mobile_app, "Web Application", ".NET MVC", "Веб-интерфейс")
+    Container(web_app, "Web Application", "", "Веб-интерфейс")
+    Container(mobile_app, "Mobile Application", "", "Мобильное приложение")
     Container(gateway, "Gateway API", ".NET & Ocelot")
     Container(user_service, "User Service")
     ContainerDb(user_db, "User Db", "PostgreSQL", "Хранение данных пользователей")
