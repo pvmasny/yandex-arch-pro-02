@@ -2,9 +2,9 @@
 {
     public class PaymentDto
     {
-        public Guid payment_id { get; set; }
+        public int payment_id { get; set; }
 
-        public Guid user_id { get; set; }
+        public int user_id { get; set; }
 
         decimal amount { get; set; }
 

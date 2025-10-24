@@ -2,7 +2,7 @@
 {
     public class UserDto
     {
-        public Guid user_id { get; set; }
+        public int user_id { get; set; }
 
         public string username { get; set; }
 
