@@ -5,7 +5,7 @@
 1. Спроектируйте to be архитектуру КиноБездны, разделив всю систему на отдельные домены и организовав интеграционное взаимодействие и единую точку вызова сервисов.
 Результат представьте в виде контейнерной диаграммы в нотации С4.
 Добавьте ссылку на файл в этот шаблон
-[ссылка на файл](ссылка)
+![КиноБездна. Диаграмма контейнеров](diagrams/container/container.png)
 
 
 ## Задание 2
@@ -58,6 +58,8 @@
 
 Необходимые тесты для проверки этого API вызываются при запуске npm run test:local из папки tests/postman 
 Приложите скриншот тестов и скриншот состояния топиков Kafka http://localhost:8090 
+![tests](screenshots/task-2.1.png)
+![kafka](screenshots/task-2.2.png)
 
 
 ## Задание 3
@@ -273,6 +275,9 @@ cat .docker/config.json | base64
 
 #### Шаг 3
 Добавьте сюда скриншота вывода при вызове https://cinemaabyss.example.com/api/movies и  скриншот вывода event-service после вызова тестов.
+![cinemaabyss.example.com](screenshots/task3.2.movies.png)
+![event-service-logs](screenshots/task3.png)
+![k8s-tests](screenshots/task3.3.k8s-tests.png)
 
 
 ## Задание 4
@@ -286,7 +291,7 @@ cat .docker/config.json | base64
 proxyService:
   enabled: true
   image:
-    repository: ghcr.io/db-exp/cinemaabysstest/proxy-service
+    repository: ghcr.io/pvmasny/yandex-arch-pro-02/proxy-service
     tag: latest
     pullPolicy: Always
   replicas: 1
@@ -303,7 +308,7 @@ proxyService:
     type: ClusterIP
 ```
 
-- Вместо ghcr.io/db-exp/cinemaabysstest/proxy-service напишите свой путь до образа для всех сервисов
+- Вместо ghcr.io/pvmasny/yandex-arch-pro-02/proxy-service напишите свой путь до образа для всех сервисов
 - для imagePullSecret проставьте свое значение (скопируйте из конфигурации kubernetes)
   ```yaml
   imagePullSecrets:
@@ -348,6 +353,9 @@ minikube tunnel
 Потом вызовите 
 https://cinemaabyss.example.com/api/movies
 и приложите скриншот развертывания helm и вывода https://cinemaabyss.example.com/api/movies
+
+![helm1](screenshots/task4.2.png)
+![helm1](screenshots/task4.1.png)
 
 
 # Задание 5
@@ -414,6 +422,9 @@ You can see 21 for the upstream_rq_pending_overflow value which means 21 calls s
 ```
 
 Приложите скриншот работы circuit breaker'а
+
+![cb1](screenshots/task-5.1.cb.png)
+![cb2](screenshots/task-5.2.cb.png)
 
 Удаляем все
 ```bash
