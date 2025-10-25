@@ -288,7 +288,7 @@ cat .docker/config.json | base64
 proxyService:
   enabled: true
   image:
-    repository: ghcr.io/db-exp/cinemaabysstest/proxy-service
+    repository: ghcr.io/pvmasny/yandex-arch-pro-02/proxy-service
     tag: latest
     pullPolicy: Always
   replicas: 1
@@ -305,7 +305,7 @@ proxyService:
     type: ClusterIP
 ```
 
-- Вместо ghcr.io/db-exp/cinemaabysstest/proxy-service напишите свой путь до образа для всех сервисов
+- Вместо ghcr.io/pvmasny/yandex-arch-pro-02/proxy-service напишите свой путь до образа для всех сервисов
 - для imagePullSecret проставьте свое значение (скопируйте из конфигурации kubernetes)
   ```yaml
   imagePullSecrets:
