@@ -23,9 +23,20 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+//app.UseAuthorization();
 
 app.MapControllers();
-app.UseOcelot().Wait();
+app.MapGet("/health", () =>
+ new { status = "success" });
+//await app.UseOcelot();
+
+
+app.UseWhen(context => !context.Request.Path.StartsWithSegments("/health"), appBuilder =>
+{
+    appBuilder.UseOcelot().Wait();
+});
+
+
+
 
 app.Run();
